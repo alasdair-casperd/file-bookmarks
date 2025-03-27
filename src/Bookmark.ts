@@ -23,6 +23,7 @@ export class Bookmark extends vscode.TreeItem {
     this.iconPath = new vscode.ThemeIcon(
       this.type === "folder" ? "symbol-folder" : "file"
     );
+
     this.resourceUri = this.uri;
   }
 

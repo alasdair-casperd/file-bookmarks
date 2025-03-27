@@ -31,7 +31,8 @@
       },
       {
         "command": "bookmarks.removeBookmark",
-        "title": "Remove Bookmark"
+        "title": "Remove Bookmark",
+        "icon": "$(trash)"
       }
     ],
     "menus": {
@@ -40,6 +41,11 @@
           "command": "bookmarks.removeBookmark",
           "when": "view == bookmarksView",
           "group": "navigation"
+        },
+        {
+          "command": "bookmarks.removeBookmark",
+          "when": "view == bookmarksView",
+          "group": "inline"
         }
       ],
       "explorer/context": [
