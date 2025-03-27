@@ -21,7 +21,7 @@ export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
     if (element) return [];
 
     const storedBookmarks = this.context.workspaceState.get<Bookmark[]>(
-      "bookmarks",
+      "file-bookmarks",
       []
     );
 
@@ -38,20 +38,20 @@ export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
    */
   addBookmark = async (label: string, uri: vscode.Uri, type: BookmarkType) => {
     const storedBookmarks = this.context.workspaceState.get<Bookmark[]>(
-      "bookmarks",
+      "file-bookmarks",
       []
     );
 
     const newBookmark = new Bookmark(label, uri, type);
     storedBookmarks.push(newBookmark);
 
-    await this.context.workspaceState.update("bookmarks", storedBookmarks);
+    await this.context.workspaceState.update("file-bookmarks", storedBookmarks);
     this.refresh();
   };
 
   removeBookmark = async (bookmark: Bookmark) => {
     const stored_bookmarks = this.context.workspaceState.get<Bookmark[]>(
-      "bookmarks",
+      "file-bookmarks",
       []
     );
 
@@ -59,7 +59,7 @@ export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
       return !(b.uri === bookmark.uri && b.label === bookmark.label);
     });
 
-    await this.context.workspaceState.update("bookmarks", output);
+    await this.context.workspaceState.update("file-bookmarks", output);
     this.refresh();
   };
 

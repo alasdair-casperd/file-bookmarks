@@ -1,6 +1,6 @@
 {
-  "name": "bookmarks",
-  "displayName": "bookmarks",
+  "name": "file-bookmarks",
+  "displayName": "File Bookmarks",
   "description": "Bookmark entire files for quick access",
   "version": "0.0.1",
   "engines": {
@@ -23,15 +23,15 @@
     },
     "commands": [
       {
-        "command": "bookmarks.bookmarkFile",
+        "command": "file-bookmarks.bookmarkFile",
         "title": "Bookmark File"
       },
       {
-        "command": "bookmarks.bookmarkFolder",
+        "command": "file-bookmarks.bookmarkFolder",
         "title": "Bookmark Folder"
       },
       {
-        "command": "bookmarks.removeBookmark",
+        "command": "file-bookmarks.removeBookmark",
         "title": "Remove Bookmark",
         "icon": "$(trash)"
       }
@@ -39,31 +39,31 @@
     "menus": {
       "view/item/context": [
         {
-          "command": "bookmarks.removeBookmark",
+          "command": "file-bookmarks.removeBookmark",
           "when": "view == bookmarksView",
           "group": "navigation"
         },
         {
-          "command": "bookmarks.removeBookmark",
+          "command": "file-bookmarks.removeBookmark",
           "when": "view == bookmarksView",
           "group": "inline"
         }
       ],
       "explorer/context": [
         {
-          "command": "bookmarks.bookmarkFile",
+          "command": "file-bookmarks.bookmarkFile",
           "when": "resourceScheme == file && !explorerResourceIsFolder",
           "group": "navigation"
         },
         {
-          "command": "bookmarks.bookmarkFolder",
+          "command": "file-bookmarks.bookmarkFolder",
           "when": "resourceScheme == file && explorerResourceIsFolder",
           "group": "navigation"
         }
       ],
       "editor/title/context": [
         {
-          "command": "bookmarks.bookmarkFile",
+          "command": "file-bookmarks.bookmarkFile",
           "when": "resourceScheme == file",
           "group": "navigation"
         }

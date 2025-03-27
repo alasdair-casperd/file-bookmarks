@@ -14,7 +14,7 @@ export class Bookmark extends vscode.TreeItem {
     this.description = this.item_name;
 
     this.command = {
-      command: "bookmarks.openBookmark",
+      command: "file-bookmarks.openBookmark",
       title: "Open Bookmark",
       arguments: [this.uri, this.type],
     };

@@ -19,7 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Command to open a bookmarked file
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "bookmarks.openBookmark",
+      "file-bookmarks.openBookmark",
       async (uri: vscode.Uri, type: BookmarkType) => {
         // Handle files
         if (type === "file") {
@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Command to add a new file bookmark
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "bookmarks.bookmarkFile",
+      "file-bookmarks.bookmarkFile",
       async (uri?: vscode.Uri) => {
         // If no uri is provided, use the currently active file
         if (!uri) {
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Command to add a new folder bookmark
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "bookmarks.bookmarkFolder",
+      "file-bookmarks.bookmarkFolder",
       async (uri: vscode.Uri) => {
         // Prompt the user to enter a label
         let label = await vscode.window.showInputBox({
@@ -84,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Command to remove a bookmark
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "bookmarks.removeBookmark",
+      "file-bookmarks.removeBookmark",
       async (bookmark: Bookmark) => {
         if (!bookmark) {
           vscode.window.showErrorMessage("No bookmark selected.");
