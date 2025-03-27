@@ -42,6 +42,20 @@ export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
     this.refresh();
   };
 
+  removeBookmark = async (bookmark: Bookmark) => {
+    const stored_bookmarks = this.context.workspaceState.get<Bookmark[]>(
+      "bookmarks",
+      []
+    );
+
+    const output = stored_bookmarks.filter((b) => {
+      b.path !== bookmark.path && b.label !== bookmark.label;
+    });
+
+    await this.context.workspaceState.update("bookmarks", output);
+    this.refresh();
+  };
+
   refresh(): void {
     this._onDidChangeTreeData.fire();
   }

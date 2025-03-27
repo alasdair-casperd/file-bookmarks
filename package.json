@@ -15,7 +15,7 @@
     "views": {
       "explorer": [
         {
-          "id": "bookmarks",
+          "id": "bookmarksView",
           "name": "Bookmarks"
         }
       ]
@@ -23,9 +23,29 @@
     "commands": [
       {
         "command": "bookmarks.addBookmark",
-        "title": "Bookmark Current File"
+        "title": "Bookmark File"
+      },
+      {
+        "command": "bookmarks.removeBookmark",
+        "title": "Remove Bookmark"
       }
-    ]
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "bookmarks.removeBookmark",
+          "when": "view == bookmarksView",
+          "group": "navigation"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "bookmarks.addBookmark",
+          "when": "resourceScheme == file",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run package",
