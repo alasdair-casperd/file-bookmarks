@@ -22,16 +22,8 @@
     },
     "commands": [
       {
-        "command": "bookmarks.helloworld",
-        "title": "Hello World"
-      },
-      {
-        "command": "bookmarks.storeData",
-        "title": "Hello World"
-      },
-      {
-        "command": "bookmarks.getData",
-        "title": "Hello World"
+        "command": "bookmarks.addBookmark",
+        "title": "Bookmark Current File"
       }
     ]
   },

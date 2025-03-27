@@ -2,7 +2,14 @@ import path from "path";
 import * as vscode from "vscode";
 
 export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
-  constructor(private workspace_root: string | undefined) {}
+  private _onDidChangeTreeData: vscode.EventEmitter<
+    Bookmark | undefined | void
+  > = new vscode.EventEmitter<Bookmark | undefined | void>();
+
+  readonly onDidChangeTreeData: vscode.Event<Bookmark | undefined | void> =
+    this._onDidChangeTreeData.event;
+
+  constructor(private context: vscode.ExtensionContext) {}
 
   getTreeItem = (element: Bookmark): vscode.TreeItem => {
     return element;
@@ -12,41 +19,49 @@ export class BookmarkProvider implements vscode.TreeDataProvider<Bookmark> {
     // Only the root (element === undefined) should have children
     if (element) return [];
 
-    // Return a test bookmark
-    return [
-      new Bookmark("Test Bookmark", "test_1.txt", "/", this.workspace_root),
-      new Bookmark("Test Bookmark 1", "test_2.txt", "/", this.workspace_root),
-      new Bookmark("Test Bookmark 2", "test_3.txt", "/", this.workspace_root),
-      new Bookmark("Test Bookmark 3", "test_4.txt", "/", this.workspace_root),
-      new Bookmark("Test Bookmark 4", "test_5.txt", "/", this.workspace_root),
-    ];
+    const storedBookmarks = this.context.workspaceState.get<Bookmark[]>(
+      "bookmarks",
+      []
+    );
+
+    return storedBookmarks.map(
+      (bookmark) => new Bookmark(bookmark.label, bookmark.path)
+    );
   };
+
+  addBookmark = async (label: string, path: string) => {
+    const storedBookmarks = this.context.workspaceState.get<Bookmark[]>(
+      "bookmarks",
+      []
+    );
+
+    const newBookmark = new Bookmark(label, path);
+    storedBookmarks.push(newBookmark);
+
+    await this.context.workspaceState.update("bookmarks", storedBookmarks);
+    this.refresh();
+  };
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
+  }
 }
 
 export class Bookmark extends vscode.TreeItem {
-  constructor(
-    public label: string,
-    public readonly file_name: string,
-    public readonly folder_path: string,
-    private readonly workspace_root: string | undefined
-  ) {
+  constructor(public label: string, public readonly path: string) {
     super(label, vscode.TreeItemCollapsibleState.None);
 
     this.tooltip = `${this.label} – Bookmarked File`;
-    this.description = file_name;
+    this.description = this.file_name;
 
     this.command = {
       command: "bookmarks.openBookmark",
       title: "Open Bookmark",
-      arguments: [this],
+      arguments: [this.path],
     };
   }
 
-  public get file_path() {
-    return path.join(
-      this.workspace_root || "",
-      this.folder_path,
-      this.file_name
-    );
+  public get file_name() {
+    return path.basename(this.path);
   }
 }
