@@ -73,6 +73,10 @@ export class Bookmark extends vscode.TreeItem {
       title: "Open Bookmark",
       arguments: [this.path],
     };
+
+    // Use VS Code's built-in file icons
+    this.iconPath = new vscode.ThemeIcon("file");
+    this.resourceUri = vscode.Uri.file(this.path);
   }
 
   public get file_name() {
