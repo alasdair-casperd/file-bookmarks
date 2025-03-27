@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
-import { Bookmark, BookmarkProvider } from "./BookmarkProvider";
+import { BookmarkProvider } from "./BookmarkProvider";
 import path from "path";
+import { Bookmark } from "./Bookmark";
 
 export function activate(context: vscode.ExtensionContext) {
   const rootPath =
