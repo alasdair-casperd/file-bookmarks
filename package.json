@@ -22,8 +22,12 @@
     },
     "commands": [
       {
-        "command": "bookmarks.addBookmark",
+        "command": "bookmarks.bookmarkFile",
         "title": "Bookmark File"
+      },
+      {
+        "command": "bookmarks.bookmarkFolder",
+        "title": "Bookmark Folder"
       },
       {
         "command": "bookmarks.removeBookmark",
@@ -40,14 +44,19 @@
       ],
       "explorer/context": [
         {
-          "command": "bookmarks.addBookmark",
-          "when": "resourceScheme == file",
+          "command": "bookmarks.bookmarkFile",
+          "when": "resourceScheme == file && !explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "bookmarks.bookmarkFolder",
+          "when": "resourceScheme == file && explorerResourceIsFolder",
           "group": "navigation"
         }
       ],
       "editor/title/context": [
         {
-          "command": "bookmarks.addBookmark",
+          "command": "bookmarks.bookmarkFile",
           "when": "resourceScheme == file",
           "group": "navigation"
         }
