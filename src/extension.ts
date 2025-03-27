@@ -20,20 +20,19 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "bookmarks.openBookmark",
-      async (file_path: string, type: BookmarkType) => {
+      async (uri: vscode.Uri, type: BookmarkType) => {
         // Handle files
         if (type === "file") {
-          const uri = vscode.Uri.file(file_path);
-          const document = await vscode.workspace.openTextDocument(uri);
-          await vscode.window.showTextDocument(document);
+          const reloaded_uri = vscode.Uri.file(uri.fsPath);
+          const document = await vscode.workspace.openTextDocument(
+            reloaded_uri
+          );
+          await vscode.window.showTextDocument(reloaded_uri);
         }
 
         // Handle folders
         else {
-          vscode.commands.executeCommand(
-            "revealInExplorer",
-            vscode.Uri.file(file_path)
-          );
+          vscode.commands.executeCommand("revealInExplorer", uri);
         }
       }
     )
@@ -44,21 +43,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "bookmarks.bookmarkFile",
       async (uri?: vscode.Uri) => {
-        let file_path: string | undefined;
-
-        // If a URI is provided, use it
-        if (uri) {
-          file_path = uri.fsPath;
-        }
-
-        // Otherwise, get the active editor's file path
-        else {
+        // If no uri is provided, use the currently active file
+        if (!uri) {
           const editor = vscode.window.activeTextEditor;
-          if (editor) file_path = editor.document.uri.fsPath;
+          if (editor) uri = editor.document.uri;
         }
 
-        if (!file_path) {
-          vscode.window.showErrorMessage("No file path found.");
+        if (!uri) {
+          vscode.window.showErrorMessage("No selected file was found.");
           return;
         }
 
@@ -67,8 +59,8 @@ export function activate(context: vscode.ExtensionContext) {
           prompt: "Enter bookmark name",
         });
 
-        if (label === "") label = path.basename(file_path);
-        if (label) bookmark_provider.addBookmark(label, file_path, "file");
+        if (label === "") label = path.basename(uri.path);
+        if (label) bookmark_provider.addBookmark(label, uri, "file");
       }
     )
   );
@@ -78,15 +70,13 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "bookmarks.bookmarkFolder",
       async (uri: vscode.Uri) => {
-        const file_path = uri.fsPath;
-
         // Prompt the user to enter a label
         let label = await vscode.window.showInputBox({
           prompt: "Enter bookmark name",
         });
 
-        if (label === "") label = path.basename(file_path);
-        if (label) bookmark_provider.addBookmark(label, file_path, "folder");
+        if (label === "") label = path.basename(uri.path);
+        if (label) bookmark_provider.addBookmark(label, uri, "folder");
       }
     )
   );
