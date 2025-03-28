@@ -50,7 +50,13 @@ export class BookmarkProvider
 
     if (stored_bookmarks) {
       this.bookmarks = stored_bookmarks.map(
-        (bookmark) => new Bookmark(bookmark.label, bookmark.uri, bookmark.type)
+        (bookmark) =>
+          new Bookmark(
+            bookmark.label,
+            bookmark.uri,
+            bookmark.type,
+            bookmark.version
+          )
       );
     }
   };
@@ -73,7 +79,12 @@ export class BookmarkProvider
     uri: vscode.Uri,
     type: BookmarkType
   ) => {
-    const new_bookmark = new Bookmark(label, uri, type);
+    const new_bookmark = new Bookmark(
+      label,
+      uri,
+      type,
+      this.context.extension.packageJSON.version
+    );
     this.bookmarks.push(new_bookmark);
     await this.saveBookmarks();
     this.refresh();

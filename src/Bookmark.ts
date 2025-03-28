@@ -6,7 +6,8 @@ export class Bookmark extends vscode.TreeItem {
   constructor(
     public label: string,
     public readonly uri: vscode.Uri,
-    public readonly type: BookmarkType
+    public readonly type: BookmarkType,
+    public version: string
   ) {
     super(label, vscode.TreeItemCollapsibleState.None);
 
