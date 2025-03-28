@@ -1,8 +1,6 @@
-# File Bookmarks
-
 The **File Bookmarks** extension enables bookmarking of entire files, making large projects easier to navigate. The extension creates a new 'Bookmarks' sub-view within the Explorer tab.
 
-\!\[The Bookmarks View\]\(images/bookmarks-screenshot-1.png\)
+\!\[The Bookmarks View\]\(https://www.alasdaircasperd.com/resources/vscode/file-bookmarks/bookmarks-screenshot-1.png\)
 
 ## Features
 

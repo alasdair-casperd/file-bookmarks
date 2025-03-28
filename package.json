@@ -3,8 +3,9 @@
   "publisher": "alasdaircasperd",
   "repository": "https://github.com/alasdair-casperd/file-bookmarks",
   "displayName": "File Bookmarks",
-  "description": "Bookmark entire files for quick access",
-  "version": "1.0.0",
+  "description": "Bookmark important files for quick access",
+  "icon": "images/logo.png",
+  "version": "1.0.1",
   "engines": {
     "vscode": "^1.98.0"
   },
