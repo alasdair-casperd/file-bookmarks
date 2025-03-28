@@ -15,6 +15,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Bookmarks tree view
   vscode.window.registerTreeDataProvider("bookmarksView", bookmark_provider);
+  vscode.window.createTreeView("bookmarksView", {
+    treeDataProvider: bookmark_provider,
+    dragAndDropController: bookmark_provider,
+  });
 
   // Command to open a bookmarked file
   context.subscriptions.push(
